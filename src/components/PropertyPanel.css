@@ -1,7 +1,7 @@
 .property-panel {
     position: absolute;
-    top: 50%; /* Center it vertically */
-    left: 20px; /* Put it on the left */
+    top: 50%;
+    left: 20px;
     transform: translateY(-50%);
     
     background: var(--ui-surface);

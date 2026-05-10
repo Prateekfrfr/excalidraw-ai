@@ -1,14 +1,11 @@
-// src/ai.js
+
 export const generateShapes = async (prompt, stagePos = { x: 0, y: 0 }) => {
-    // Vite uses import.meta.env to grab variables from your .env file securely!
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
-    // Calculate the center of the screen based on the current pan position!
     const centerX = -stagePos.x + window.innerWidth / 2;
     const centerY = -stagePos.y + window.innerHeight / 2;
 
-    // We give Gemini a highly specific system prompt so it knows EXACTLY what to do
     const systemPrompt = `
     You are an AI assistant built into an Excalidraw clone. The user will ask you to draw something.
     You must respond with ONLY a raw JSON array of shapes representing their request.
@@ -36,7 +33,6 @@ export const generateShapes = async (prompt, stagePos = { x: 0, y: 0 }) => {
         });
 
         const data = await response.json();
-        
         if (!data.candidates) {
             console.error("API Error Details:", data);
             if (data.error && data.error.code === 429) {
@@ -48,24 +44,18 @@ export const generateShapes = async (prompt, stagePos = { x: 0, y: 0 }) => {
         }
 
         let resultText = data.candidates[0].content.parts[0].text.trim();
-        
-        // Strip out markdown code blocks if the AI decides to ignore our rules!
         if (resultText.startsWith("```json")) {
             resultText = resultText.replace(/^```json\n?/, "").replace(/```$/, "").trim();
         } else if (resultText.startsWith("```")) {
             resultText = resultText.replace(/^```\n?/, "").replace(/```$/, "").trim();
         }
 
-        // Failsafe: extract only the array brackets if there's extra conversational text
         const startIndex = resultText.indexOf('[');
         const endIndex = resultText.lastIndexOf(']');
         if (startIndex !== -1 && endIndex !== -1) {
             resultText = resultText.substring(startIndex, endIndex + 1);
         }
-        
         const shapes = JSON.parse(resultText);
-        
-        // Give them fresh IDs to avoid React key collisions
         return shapes.map(s => ({ ...s, id: Date.now().toString() + Math.random() }));
     } catch (e) {
         console.error("Failed to parse AI response. Error:", e);

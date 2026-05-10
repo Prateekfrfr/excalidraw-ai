@@ -13,8 +13,6 @@ function PropertyPanel() {
         fillStyle, handleFillStyleChange,
         isPropertyPanelVisible, setPropertyPanelVisible
     } = useStore();
-    // EXCALIDRAW MAGIC: Only show the panel IF we are drawing a shape/pen, OR if we have clicked a shape!
-    // ALSO check if they manually closed it!
     if (!isPropertyPanelVisible || (tool === "select" && selectedShape === null)) {
         return null;
     }

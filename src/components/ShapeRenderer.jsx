@@ -2,7 +2,6 @@ import React from 'react';
 import { Rect, Ellipse, Line, Text, Arrow, Image as KonvaImage, Transformer } from 'react-konva';
 import useStore from '../store';
 
-// Upgraded component with built-in resizing!
 const CustomImage = ({ shapeProps, isSelected, isDraggable, onSelect, onMouseEnter, onDragEnd, onTransformEnd }) => {
     const [image, setImage] = React.useState(null);
     const imageRef = React.useRef(null);
@@ -15,8 +14,6 @@ const CustomImage = ({ shapeProps, isSelected, isDraggable, onSelect, onMouseEnt
             setImage(img);
         };
     }, [shapeProps.src]);
-
-    // This magically attaches the resize handles when you select the image!
     React.useEffect(() => {
         if (isSelected && trRef.current && imageRef.current) {
             trRef.current.nodes([imageRef.current]);
@@ -30,15 +27,15 @@ const CustomImage = ({ shapeProps, isSelected, isDraggable, onSelect, onMouseEnt
                 ref={imageRef}
                 x={shapeProps.x}
                 y={shapeProps.y}
-                scaleX={shapeProps.scaleX || 1} // Apply the scale!
+                scaleX={shapeProps.scaleX || 1}
                 scaleY={shapeProps.scaleY || 1}
-                rotation={shapeProps.rotation || 0} // You can even rotate it now!
+                rotation={shapeProps.rotation || 0}
                 image={image}
                 draggable={isDraggable}
                 onClick={onSelect}
                 onMouseEnter={onMouseEnter}
                 onDragEnd={onDragEnd}
-                onTransformEnd={onTransformEnd} // Save the new size when you let go
+                onTransformEnd={onTransformEnd}
             />
             {isSelected && (
                 <Transformer
@@ -80,7 +77,6 @@ function ShapeRenderer({ shape, isSelected, tool, updateShapes, shapes, setSelec
             else handleSelect();
         },
         onMouseEnter: (e) => {
-            // e.evt.buttons === 1 means the left mouse button is held down
             if (tool === "eraser" && e.evt.buttons === 1) {
                 deleteThisShape();
             }

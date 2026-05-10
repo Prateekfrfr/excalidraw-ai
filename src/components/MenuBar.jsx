@@ -12,7 +12,6 @@ function MenuBar() {
 
     return (
         <div className="menu-bar-container">
-            {/* The Upward Popping Menu */}
             <div className={`menu-dropdown ${isOpen ? "open" : ""}`}>
                 <div className="menu-item" style={{ padding: "6px 12px" }}>
                     <SignedOut>
@@ -34,9 +33,8 @@ function MenuBar() {
                     <Download size={18} /> Export Image
                 </button>
                 <button className="menu-item" onClick={() => {
-                    // Use a standard browser confirm box so they don't accidentally click it!
                     if (window.confirm("Are you sure you want to completely clear the canvas?")) {
-                        updateShapes([]); // Wiping the store instantly clears the canvas!
+                        updateShapes([]);
                         setIsOpen(false);
                     }
                 }}>
@@ -57,7 +55,6 @@ function MenuBar() {
                         setIsOpen(false);
                         const newShapes = await generateShapes(promptText, useStore.getState().stagePos);
                         if (newShapes.length > 0) {
-                            // Inject the AI's mind directly into our store!
                             updateShapes([...useStore.getState().shapes, ...newShapes]);
                         }
                     }
@@ -65,8 +62,6 @@ function MenuBar() {
                     <Sparkles size={18} color="#FFD700" /> <span style={{color: "#FFD700"}}>AI Magic Generate</span>
                 </button>
             </div>
-
-            {/* The Hamburger Button */}
             <button className="menu-trigger" onClick={() => setIsOpen(!isOpen)}>
                 <Menu size={24} />
             </button>

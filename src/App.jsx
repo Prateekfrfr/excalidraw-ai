@@ -10,7 +10,6 @@ import { useUser } from '@clerk/clerk-react';
 
 
 function ExcalidrawRoom() {
-    
     const { roomId } = useParams();
     const { connectToRoom } = useStore();
     const { user, isLoaded } = useUser();
@@ -19,18 +18,14 @@ function ExcalidrawRoom() {
            connectToRoom(roomId, user);
         }
     }, [roomId, isLoaded, user, connectToRoom]);
-    
     return (
        <>
-         
           <SignedIn>
               <MenuBar />
               <Toolbar />
               <PropertyPanel />
               <Canvas />
           </SignedIn>
-          
-         
           <SignedOut>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#121212', color: 'white' }}>
                   <h1 style={{ marginBottom: '1rem' }}>Welcome to Collaborative Excalidraw</h1>
@@ -49,19 +44,13 @@ function ExcalidrawRoom() {
 }
 
 function App() {
-
   const randomRoomId = Math.random().toString(36).substring(2, 9);
-  
   return (
     <Routes>
-      
       <Route path="/" element={<Navigate to={`/room/${randomRoomId}`} replace />} />
-      
-    
       <Route path="/room/:roomId" element={<ExcalidrawRoom />} />
     </Routes>
   )
 }
-
 
 export default App

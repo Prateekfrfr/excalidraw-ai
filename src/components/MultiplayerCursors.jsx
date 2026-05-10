@@ -10,7 +10,6 @@ function MultiplayerCursors({ cursors }) {
 
                 return (
                     <Group key={clientId} x={cursor.cursor.x} y={cursor.cursor.y}>
-                        {/* A cute little circular mouse pointer */}
                         <Ellipse
                             radiusX={8}
                             radiusY={8}
@@ -21,7 +20,6 @@ function MultiplayerCursors({ cursors }) {
                             shadowBlur={4}
                             shadowOpacity={0.3}
                         />
-                        {/* The user's name badge */}
                         <Rect
                             x={10}
                             y={10}

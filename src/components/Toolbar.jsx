@@ -4,7 +4,7 @@ import './Toolbar.css';
 import { MousePointer2, Square, Circle as CircleIcon, Pen, Undo2, Redo2,Eraser ,Type, Download,Diamond, ArrowUpRight ,Minus,Image as ImageIcon, Hand, Palette} from 'lucide-react';
 function Toolbar() {
     const { tool, setTool, undo, redo, isPropertyPanelVisible, setPropertyPanelVisible } = useStore();
-     const fileInputRef = useRef(null); //
+     const fileInputRef = useRef(null);
     return (
         <div className="toolbar">
             <button className={`tool-btn ${tool === "hand" ? "active" : ""}`} onClick={() => setTool("hand")} title="Pan Canvas">
@@ -64,15 +64,13 @@ function Toolbar() {
                     if (file) {
                         const reader = new FileReader();
                         reader.onload = (event) => {
-                            // Tell the Canvas that we have a base64 string ready to drop!
                             window.dispatchEvent(new CustomEvent("upload-image", { detail: event.target.result }));
                         };
-                        reader.readAsDataURL(file); // This converts the image to the Base64 string
+                        reader.readAsDataURL(file);
                     }
-                    e.target.value = null; // Reset the input so you can upload the same image twice if you want
+                    e.target.value = null;
                 }} 
             />
-            {/* The visible button that clicks the hidden input */}
             <button className="tool-btn" onClick={() => fileInputRef.current.click()} title="Upload Image">
                 <ImageIcon size={20} />
             </button>
